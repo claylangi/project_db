@@ -1,0 +1,65 @@
+- CREATE TABLE Users (
+user_id INT NOT NULL AUTO_INCREMENT,
+username VARCHAR(50) NOT NULL,
+email VARCHAR(100) NOT NULL,
+password VARCHAR(50) NOT NULL,
+PRIMARY KEY (user_id)
+);
+- CREATE TABLE Authors (
+author_id INT NOT NULL AUTO_INCREMENT,
+author_name VARCHAR(100) NOT NULL,
+PRIMARY KEY (author_id)
+);
+- CREATE TABLE Genre (
+genre_id INT NOT NULL AUTO_INCREMENT,
+genre_name VARCHAR(100) NOT NULL,
+PRIMARY KEY (genre_id)
+);
+- CREATE TABLE Publishers (
+publisher_id INT NOT NULL AUTO_INCREMENT,
+publisher_name VARCHAR(100) NOT NULL,
+PRIMARY KEY (publisher_id)
+);
+- CREATE TABLE Title (
+title_id INT NOT NULL AUTO_INCREMENT,
+title_name VARCHAR(100) NOT NULL,
+PRIMARY KEY (title_id)
+);
+- CREATE TABLE Synopsis (
+synopsis_id INT NOT NULL AUTO_INCREMENT,
+synopsis_text TEXT NOT NULL,
+PRIMARY KEY (synopsis_id)
+);
+
+- CREATE TABLE Books (
+book_id INT NOT NULL AUTO_INCREMENT,
+title_id INT NOT NULL,
+synopsis_id INT NOT NULL,
+author_id INT NOT NULL,
+genre_id INT NOT NULL,
+publisher_id INT NOT NULL,
+PRIMARY KEY (book_id),
+FOREIGN KEY (author_id) REFERENCES Authors(author_id),
+FOREIGN KEY (title_id) REFERENCES Title(title_id),
+FOREIGN KEY (synopsis_id) REFERENCES Synopsis(synopsis_id),
+FOREIGN KEY (genre_id) REFERENCES Genre(genre_id),
+FOREIGN KEY (publisher_id) REFERENCES Publishers(publisher_id)
+);
+    
+- CREATE TABLE Ratings (
+rating_id INT NOT NULL AUTO_INCREMENT,
+value INT NOT NULL,
+PRIMARY KEY (rating_id)
+);
+- CREATE TABLE Reviews (
+review_id INT NOT NULL AUTO_INCREMENT,
+book_id INT NOT NULL,
+user_id INT NOT NULL,
+rating_id INT NOT NULL,
+comment TEXT NOT NULL,
+date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (review_id),
+FOREIGN KEY (book_id) REFERENCES Books(book_id),
+FOREIGN KEY (user_id) REFERENCES Users(user_id),
+FOREIGN KEY (rating_id) REFERENCES Ratings(rating_id)
+);
